@@ -1,0 +1,1289 @@
+<title>Enbaj Elektrotechnik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#E7EBED;
+    --surface:#F6F8F9;
+    --surface-2:#EDF1F2;
+    --panel-ink:#0F1719;
+    --ink:#0F1719;
+    --muted:#586A6E;
+    --line:#CBD5D7;
+    --line-strong:#A9BABC;
+    --accent:#0E8C82;
+    --accent-ink:#0A5F58;
+    --accent-soft:#D6ECEA;
+    --live:#B9790A;
+    --live-soft:#F1E1C0;
+    --good:#2E7D52;
+    --warn:#B26B00;
+    --crit:#B23B3B;
+    --shadow:0 1px 2px rgba(15,23,25,.06), 0 10px 34px rgba(15,23,25,.09);
+    --shadow-sm:0 1px 2px rgba(15,23,25,.08);
+    --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --disp:"Chakra Petch", "IBM Plex Sans", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0A0F10;
+      --surface:#111A1B;
+      --surface-2:#0D1414;
+      --ink:#DDE7E7;
+      --muted:#8CA1A2;
+      --line:#233130;
+      --line-strong:#374B49;
+      --accent:#2CB7A9;
+      --accent-ink:#8FD9D0;
+      --accent-soft:#0F302D;
+      --live:#E4A72E;
+      --live-soft:#382C15;
+      --good:#4FB07E;
+      --warn:#D08A2A;
+      --crit:#DA6A6A;
+      --shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 44px rgba(0,0,0,.55);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0A0F10;
+    --surface:#111A1B;
+    --surface-2:#0D1414;
+    --ink:#DDE7E7;
+    --muted:#8CA1A2;
+    --line:#233130;
+    --line-strong:#374B49;
+    --accent:#2CB7A9;
+    --accent-ink:#8FD9D0;
+    --accent-soft:#0F302D;
+    --live:#E4A72E;
+    --live-soft:#382C15;
+    --good:#4FB07E;
+    --warn:#D08A2A;
+    --crit:#DA6A6A;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 44px rgba(0,0,0,.55);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:var(--disp);font-weight:600;line-height:1.1;text-wrap:balance;margin:0}
+  p{margin:0}
+  a{color:inherit}
+  button{font-family:inherit}
+  ::selection{background:var(--accent-soft);color:var(--accent-ink)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  .wrap{max-width:1180px;margin-inline:auto;padding-inline:22px}
+  .eyebrow{
+    font-family:var(--mono);font-size:.72rem;font-weight:500;
+    text-transform:uppercase;letter-spacing:.18em;color:var(--muted);
+    display:inline-flex;align-items:center;gap:.55em;margin:0;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--line-strong)}
+  section{padding-block:clamp(54px,7.5vw,102px)}
+  .sect-head{max-width:60ch;display:flex;flex-direction:column;gap:14px;margin-bottom:40px}
+  .sect-head h2{font-size:clamp(1.6rem,1.15rem+1.7vw,2.35rem);letter-spacing:-.01em}
+  .sect-head p{color:var(--muted);font-size:1.05rem}
+
+  /* ---- status bar ---- */
+  .statusbar{
+    position:sticky;top:0;z-index:60;
+    background:var(--surface);border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;
+  }
+  .statusbar .wrap{display:flex;align-items:center;gap:18px;min-height:38px;flex-wrap:wrap}
+  .sb-item{display:inline-flex;align-items:center;gap:.5em;color:var(--muted);text-transform:uppercase}
+  .sb-dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 22%,transparent)}
+  .sb-spacer{margin-left:auto}
+  .sb-btn{
+    background:transparent;border:1px solid var(--line-strong);color:var(--ink);
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:5px 10px;border-radius:3px;cursor:pointer;transition:border-color .15s, background .15s;
+  }
+  .sb-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+  /* ---- header ---- */
+  .site{border-bottom:1px solid var(--line);background:var(--bg)}
+  .site .wrap{display:flex;align-items:center;gap:28px;min-height:72px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--disp);font-weight:600;font-size:1.05rem;letter-spacing:.01em;text-decoration:none}
+  .brand svg{display:block;flex:none}
+  .brand small{display:block;font-family:var(--mono);font-weight:400;font-size:.62rem;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;margin-top:2px}
+  .nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .nav a{
+    text-decoration:none;color:var(--muted);font-size:.9rem;font-weight:500;
+    padding:8px 12px;border-radius:4px;transition:color .15s, background .15s;
+  }
+  .nav a:hover{color:var(--ink);background:var(--surface-2)}
+  .nav-cta{
+    text-decoration:none;font-size:.85rem;font-weight:600;
+    padding:9px 16px;border-radius:4px;background:var(--accent);color:#fff;
+    border:1px solid var(--accent);white-space:nowrap;transition:filter .15s;
+  }
+  :root[data-theme="dark"] .nav-cta,
+  :root:not([data-theme="light"]) .nav-cta{color:#06110F}
+  .nav-cta:hover{filter:brightness(1.06)}
+  @media (max-width:820px){.nav{display:none}}
+
+  /* ---- hero ---- */
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  #pcb{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:.5;pointer-events:none}
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;padding-block:clamp(48px,6vw,88px)}
+  .hero-copy{display:flex;flex-direction:column;gap:22px}
+  .hero h1{font-size:clamp(2.35rem,1.5rem+3.6vw,3.9rem);font-weight:600;letter-spacing:-.02em}
+  .hero-sub{font-size:1.12rem;color:var(--muted);max-width:44ch}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;cursor:pointer;text-decoration:none;
+    font-size:.92rem;font-weight:600;padding:12px 20px;border-radius:4px;
+    border:1px solid var(--accent);background:var(--accent);color:#fff;transition:filter .15s, transform .1s;
+  }
+  :root[data-theme="dark"] .btn,
+  :root:not([data-theme="light"]) .btn{color:#06110F}
+  .btn:hover{filter:brightness(1.06)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+  .btn.ghost:hover{border-color:var(--accent);background:var(--accent-soft);filter:none}
+  .hero-trust{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:6px}
+
+  /* ---- console ---- */
+  .console{
+    background:var(--surface);border:1px solid var(--line-strong);border-radius:6px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .console-head{
+    display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  }
+  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--live);flex:none}
+  .live-dot.pulse{animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--live) 55%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--live) 0%,transparent)}}
+  .console-head .ch-right{margin-left:auto;display:flex;gap:6px}
+  .cbtn{
+    background:transparent;border:1px solid var(--line-strong);color:var(--ink);
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:4px 9px;border-radius:3px;cursor:pointer;transition:border-color .15s, background .15s;
+  }
+  .cbtn:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .map-frame{position:relative;background:var(--surface-2);border-bottom:1px solid var(--line)}
+  .map-frame svg{display:block;width:100%;height:auto}
+  .map-grid line{stroke:var(--line);stroke-width:.6}
+  .route{fill:none;stroke:var(--line-strong);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .trail{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+  .veh{fill:var(--live);stroke:var(--surface);stroke-width:2}
+  .veh-halo{fill:color-mix(in srgb,var(--live) 26%,transparent)}
+  .readout{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+  .ro{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:3px}
+  .ro .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .ro .v{font-family:var(--mono);font-size:1.02rem;font-weight:500;font-variant-numeric:tabular-nums}
+  .ro .v small{font-size:.68rem;color:var(--muted);font-weight:400}
+  .sig{display:inline-flex;align-items:flex-end;gap:2px;height:14px}
+  .sig i{width:3px;background:var(--line-strong);border-radius:1px}
+  .sig i.on{background:var(--good)}
+  .sig i:nth-child(1){height:30%}.sig i:nth-child(2){height:48%}.sig i:nth-child(3){height:66%}.sig i:nth-child(4){height:84%}.sig i:nth-child(5){height:100%}
+  .console-note{padding:10px 14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.03em;color:var(--muted);border-top:1px solid var(--line)}
+
+  @media (max-width:900px){
+    .hero .wrap{grid-template-columns:1fr;gap:36px}
+    .hero-sub{max-width:none}
+  }
+
+  /* ---- stats ---- */
+  .stats{border-bottom:1px solid var(--line)}
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr)}
+  .stat{padding:8px 26px 8px 0;border-left:1px solid var(--line);padding-left:26px;display:flex;flex-direction:column;gap:4px}
+  .stat:first-child{border-left:0;padding-left:0}
+  .stat .num{font-family:var(--disp);font-weight:600;font-size:clamp(1.7rem,1.2rem+1.8vw,2.5rem);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .stat .lbl{font-size:.86rem;color:var(--muted)}
+  @media (max-width:760px){
+    .stat-row{grid-template-columns:1fr 1fr;gap:26px 0}
+    .stat:nth-child(3){border-left:0;padding-left:0}
+  }
+  @media (max-width:420px){.stat-row{grid-template-columns:1fr}.stat,.stat:nth-child(3){border-left:0;padding-left:0}}
+
+  /* ---- domains ---- */
+  .domains{background:var(--surface-2);border-bottom:1px solid var(--line)}
+  .dom-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .dom{
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:28px;
+    display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow-sm);
+  }
+  .dom .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
+  .dom h3{font-size:1.4rem}
+  .dom p{color:var(--muted);font-size:.98rem}
+  .dom ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+  .dom li{position:relative;padding-left:20px;font-size:.92rem;font-family:var(--mono);letter-spacing:.01em}
+  .dom li::before{content:"▸";position:absolute;left:0;color:var(--accent)}
+  @media (max-width:800px){.dom-grid{grid-template-columns:1fr}}
+
+  /* ---- configurator ---- */
+  .cfg-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:28px;align-items:start}
+  .cfg-controls{display:flex;flex-direction:column;gap:18px}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field > span{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .seg{display:flex;flex-wrap:wrap;gap:6px}
+  .seg button{
+    flex:1 1 auto;min-width:64px;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink);
+    font-family:var(--mono);font-size:.78rem;padding:9px 10px;border-radius:4px;cursor:pointer;
+    transition:border-color .12s, background .12s, color .12s;
+  }
+  .seg button:hover{border-color:var(--accent)}
+  .seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+  :root[data-theme="dark"] .seg button[aria-pressed="true"],
+  :root:not([data-theme="light"]) .seg button[aria-pressed="true"]{color:#06110F}
+  .cfg-out{
+    background:var(--panel-ink);color:#DDE7E7;border-radius:6px;border:1px solid var(--line-strong);
+    box-shadow:var(--shadow);overflow:hidden;position:sticky;top:56px;
+  }
+  :root:not([data-theme="light"]) .cfg-out{background:#05090A}
+  :root[data-theme="dark"] .cfg-out{background:#05090A}
+  .cfg-out-head{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.1);font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#8CA1A2;display:flex;align-items:center;gap:8px}
+  .cfg-chip-vis{padding:22px;display:flex;justify-content:center;background:radial-gradient(circle at 50% 40%, rgba(44,183,169,.12), transparent 70%)}
+  .cfg-chip-vis svg{width:200px;height:200px;overflow:visible}
+  .pkg-body{fill:#0F1719;stroke:#2CB7A9;stroke-width:2}
+  .pkg-dot{fill:#2CB7A9}
+  .pkg-pin{stroke:#5C6E70;stroke-width:3;stroke-linecap:round}
+  .pkg-label{fill:#8FD9D0;font-family:var(--mono);font-size:11px;text-anchor:middle;letter-spacing:.05em}
+  .cfg-specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.09)}
+  .spec{background:#080D0E;padding:12px 16px;display:flex;flex-direction:column;gap:3px}
+  :root:not([data-theme="light"]) .spec{background:#03070800}
+  .spec.wide{grid-column:1/-1}
+  .spec .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#8CA1A2}
+  .spec .v{font-family:var(--mono);font-size:.95rem;font-weight:500;color:#DDE7E7;font-variant-numeric:tabular-nums;word-break:break-word}
+  .spec .v.part{color:#E4A72E}
+  .badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
+  .badges span{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;border:1px solid rgba(255,255,255,.18);color:#B8C8C8;padding:2px 7px;border-radius:3px}
+  @media (max-width:860px){.cfg-grid{grid-template-columns:1fr}.cfg-out{position:static}}
+
+  /* ---- pcb explorer ---- */
+  .pcb-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:28px;align-items:start}
+  .board-wrap{background:var(--surface);border:1px solid var(--line-strong);border-radius:6px;padding:16px;box-shadow:var(--shadow-sm)}
+  .board-wrap svg{display:block;width:100%;height:auto}
+  .b-sub{fill:var(--surface-2);stroke:var(--line-strong);stroke-width:1.5}
+  .b-trace{stroke:var(--accent);stroke-width:1.4;fill:none;opacity:.55}
+  .b-block{fill:var(--surface);stroke:var(--line-strong);stroke-width:1.6;cursor:pointer;transition:fill .14s, stroke .14s}
+  .b-block:hover,.b-block:focus-visible,.b-block.active{fill:var(--accent-soft);stroke:var(--accent)}
+  .b-block-label{font-family:var(--mono);font-size:9px;fill:var(--ink);text-anchor:middle;pointer-events:none;letter-spacing:.02em}
+  .b-info{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px;display:flex;flex-direction:column;gap:10px;min-height:200px}
+  .b-info .tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
+  .b-info h3{font-size:1.2rem}
+  .b-info p{color:var(--muted);font-size:.95rem}
+  .b-info dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-family:var(--mono);font-size:.78rem}
+  .b-info dt{color:var(--muted)}
+  @media (max-width:820px){.pcb-grid{grid-template-columns:1fr}}
+
+  /* ---- process ---- */
+  .process{background:var(--surface-2);border-block:1px solid var(--line)}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+  .step{padding:0 22px;border-left:1px solid var(--line-strong)}
+  .step:first-child{border-left:0;padding-left:0}
+  .step .no{font-family:var(--mono);font-size:.78rem;color:var(--accent-ink);letter-spacing:.1em}
+  .step h3{font-size:1.05rem;margin:10px 0 8px}
+  .step p{font-size:.88rem;color:var(--muted)}
+  @media (max-width:900px){.steps{grid-template-columns:1fr 1fr;gap:28px 0}.step{padding-left:22px}.step:nth-child(odd){border-left:0;padding-left:0}}
+  @media (max-width:460px){.steps{grid-template-columns:1fr}.step,.step:nth-child(odd){border-left:0;padding-left:0}}
+
+  /* ---- refs marquee ---- */
+  .refs{border-bottom:1px solid var(--line);overflow:hidden}
+  .refs .wrap{padding-block:clamp(40px,5vw,64px)}
+  .marquee{overflow:hidden;margin-top:24px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .marquee-track{display:flex;gap:14px;width:max-content;animation:scroll 34s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+  .chiptag{
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;white-space:nowrap;
+    border:1px solid var(--line-strong);border-radius:4px;padding:10px 16px;color:var(--muted);background:var(--surface);
+  }
+
+  /* ---- faq ---- */
+  .faq-list{border-top:1px solid var(--line)}
+  .qa{border-bottom:1px solid var(--line)}
+  .qa button{
+    width:100%;text-align:left;background:transparent;border:0;cursor:pointer;
+    padding:20px 40px 20px 0;position:relative;color:var(--ink);
+    font-family:var(--disp);font-weight:500;font-size:1.05rem;
+  }
+  .qa button::after{content:"+";position:absolute;right:6px;top:18px;font-family:var(--mono);font-size:1.3rem;color:var(--accent);transition:transform .2s}
+  .qa button[aria-expanded="true"]::after{transform:rotate(45deg)}
+  .qa .ans{max-height:0;overflow:hidden;transition:max-height .28s ease}
+  .qa .ans p{padding:0 40px 22px 0;color:var(--muted);font-size:.96rem}
+
+  /* ---- contact ---- */
+  .contact{background:var(--surface-2);border-top:1px solid var(--line)}
+  .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}
+  .contact-info{display:flex;flex-direction:column;gap:16px}
+  .contact-info .row{font-family:var(--mono);font-size:.86rem;display:flex;flex-direction:column;gap:2px}
+  .contact-info .row span{color:var(--muted);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase}
+  form{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:26px;box-shadow:var(--shadow-sm)}
+  .fg{display:flex;flex-direction:column;gap:6px}
+  .fg.full{grid-column:1/-1}
+  label{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  input,select,textarea{
+    font-family:var(--sans);font-size:.94rem;color:var(--ink);background:var(--bg);
+    border:1px solid var(--line-strong);border-radius:4px;padding:10px 12px;width:100%;
+  }
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
+  textarea{resize:vertical;min-height:96px}
+  .checkrow{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:.9rem;color:var(--muted)}
+  .checkrow input{width:auto}
+  .err{color:var(--crit);font-family:var(--mono);font-size:.7rem;min-height:0}
+  form .btn{grid-column:1/-1;justify-content:center;border:1px solid var(--accent)}
+  .form-note{grid-column:1/-1;font-family:var(--mono);font-size:.72rem;color:var(--good);min-height:1.2em}
+  @media (max-width:860px){.contact-grid{grid-template-columns:1fr}form{grid-template-columns:1fr}}
+
+  /* ---- footer ---- */
+  footer{background:var(--bg);border-top:1px solid var(--line)}
+  footer .wrap{padding-block:44px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+  footer .f-brand{display:flex;flex-direction:column;gap:8px;max-width:34ch}
+  footer .f-brand p{font-size:.86rem;color:var(--muted)}
+  footer .f-meta{margin-left:auto;display:flex;flex-direction:column;gap:10px;align-items:flex-end;text-align:right}
+  .std{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+  .std span{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;border:1px solid var(--line-strong);color:var(--muted);padding:3px 8px;border-radius:3px}
+  .f-legal{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+  .f-legal a{color:var(--muted);text-decoration:none;margin-left:14px}
+  .f-legal a:hover{color:var(--ink)}
+
+  /* ---- toast ---- */
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+    background:var(--panel-ink);color:#DDE7E7;border:1px solid var(--line-strong);
+    font-family:var(--mono);font-size:.8rem;padding:12px 20px;border-radius:5px;box-shadow:var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;z-index:100;max-width:90vw;text-align:center;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+    .marquee-track{animation:none}
+  }
+</style>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span class="sb-item"><span class="sb-dot"></span><span data-i18n="status.live">Systeme betriebsbereit</span></span>
+    <span class="sb-item" data-i18n="status.fab">Fertigung · Fürth</span>
+    <span class="sb-item" style="font-variant-numeric:tabular-nums" id="clock">--:--:-- MEZ</span>
+    <span class="sb-spacer"></span>
+    <button class="sb-btn" id="langBtn" type="button" aria-label="Sprache wechseln">EN</button>
+    <button class="sb-btn" id="themeBtn" type="button" aria-label="Farbschema wechseln">◐ <span id="themeLbl">Dunkel</span></button>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <path d="M15 2.5 25.8 8.75v12.5L15 27.5 4.2 21.25V8.75L15 2.5Z" stroke="var(--accent)" stroke-width="1.6"/>
+        <circle cx="15" cy="15" r="3.2" fill="var(--accent)"/>
+        <path d="M15 7v3M15 20v3M7.5 11v8M22.5 11v8" stroke="var(--accent)" stroke-width="1.6"/>
+        <path d="M15 15h7.5" stroke="var(--live)" stroke-width="1.6"/>
+      </svg>
+      <span>Enbaj<small>Elektrotechnik</small></span>
+    </a>
+    <nav class="nav">
+      <a href="#technik" data-i18n="nav.tech">Technik</a>
+      <a href="#konfigurator" data-i18n="nav.config">Konfigurator</a>
+      <a href="#ablauf" data-i18n="nav.process">Ablauf</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
+    </nav>
+    <a class="nav-cta" href="#kontakt" data-i18n="nav.samples">Muster anfordern</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="pcb" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Enbaj Elektrotechnik · Fürth, Deutschland</p>
+        <h1 data-i18n="hero.h1">Chips, die wissen, wo sie sind.</h1>
+        <p class="hero-sub" data-i18n="hero.sub">Wir entwickeln und fertigen Halbleitermodule und GPS-Ortungssysteme für Industrie, Automotive und Logistik — vom Schaltplan bis zur qualifizierten Serie.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#kontakt" data-i18n="hero.cta1">Muster anfordern</a>
+          <a class="btn ghost" href="#technik" data-i18n="hero.cta2">Technik ansehen</a>
+        </div>
+        <p class="hero-trust" data-i18n="hero.trust">Entwicklung + Serienfertigung im Haus · AEC-Q100 · IATF 16949 · DIN EN ISO 9001</p>
+      </div>
+
+      <div class="console" aria-label="Live-Demo Flotten-Tracking">
+        <div class="console-head">
+          <span class="live-dot pulse" id="liveDot"></span>
+          <span data-i18n="console.title">Live-Demo · Flotten-Tracking</span>
+          <span class="ch-right">
+            <button class="cbtn" id="ppBtn" type="button" data-i18n="console.pause">Pause</button>
+            <button class="cbtn" id="rsBtn" type="button" data-i18n="console.reset">Route neu</button>
+          </span>
+        </div>
+        <div class="map-frame">
+          <svg viewBox="0 0 320 200" role="img" aria-label="Stilisierte Karte mit fahrendem Fahrzeug">
+            <g class="map-grid">
+              <line x1="0" y1="40" x2="320" y2="40"/><line x1="0" y1="80" x2="320" y2="80"/>
+              <line x1="0" y1="120" x2="320" y2="120"/><line x1="0" y1="160" x2="320" y2="160"/>
+              <line x1="53" y1="0" x2="53" y2="200"/><line x1="107" y1="0" x2="107" y2="200"/>
+              <line x1="160" y1="0" x2="160" y2="200"/><line x1="213" y1="0" x2="213" y2="200"/>
+              <line x1="267" y1="0" x2="267" y2="200"/>
+            </g>
+            <polyline class="route" id="routeLine" points=""/>
+            <polyline class="trail" id="trailLine" points=""/>
+            <circle class="veh-halo" id="vehHalo" r="9" cx="24" cy="168"/>
+            <circle class="veh" id="veh" r="4.5" cx="24" cy="168"/>
+          </svg>
+        </div>
+        <div class="readout">
+          <div class="ro"><span class="k" data-i18n="console.lat">Breite</span><span class="v" id="roLat">49.4783°</span></div>
+          <div class="ro"><span class="k" data-i18n="console.lon">Länge</span><span class="v" id="roLon">11.0119°</span></div>
+          <div class="ro"><span class="k" data-i18n="console.speed">Geschw.</span><span class="v" id="roSpd">0 <small>km/h</small></span></div>
+          <div class="ro"><span class="k" data-i18n="console.sats">Satelliten</span><span class="v" id="roSat">11 / GPS+GAL</span></div>
+          <div class="ro"><span class="k" data-i18n="console.hdop">HDOP</span><span class="v" id="roHdop">0.8</span></div>
+          <div class="ro"><span class="k" data-i18n="console.sig">Signal</span><span class="v"><span class="sig" id="sig"><i></i><i></i><i></i><i></i><i></i></span></span></div>
+        </div>
+        <div class="console-note" data-i18n="console.note">u-blox-kompatibles Multiband-GNSS (L1/L5) · Aided-TTFF &lt; 3 s · NB-IoT-Backhaul</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="wrap">
+      <p class="eyebrow" data-i18n="stats.title">Kennzahlen</p>
+      <div class="stat-row" style="margin-top:22px" id="statRow">
+        <div class="stat"><span class="num" data-count="18" data-suffix="">18</span><span class="lbl" data-i18n="stat1.label">Jahre Serienerfahrung</span></div>
+        <div class="stat"><span class="num" data-count="2.4" data-decimals="1" data-suffix=" Mio.">2,4 Mio.</span><span class="lbl" data-i18n="stat2.label">Module ausgeliefert</span></div>
+        <div class="stat"><span class="num" data-count="42" data-suffix="">42</span><span class="lbl" data-i18n="stat3.label">aktive Serienprojekte</span></div>
+        <div class="stat"><span class="num" data-count="99.2" data-decimals="1" data-suffix=" %">99,2 %</span><span class="lbl" data-i18n="stat4.label">First-Pass-Yield</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="domains" id="technik">
+    <div class="wrap">
+      <div class="sect-head">
+        <p class="eyebrow" data-i18n="dom.kicker">Was wir bauen</p>
+        <h2 data-i18n="dom.title">Zwei Disziplinen, eine Leiterplatte</h2>
+        <p data-i18n="dom.sub">Halbleiter-Know-how und Satellitenortung entstehen bei uns am selben Arbeitsplatz — deshalb passt am Ende alles zusammen.</p>
+      </div>
+      <div class="dom-grid">
+        <article class="dom">
+          <span class="tag" data-i18n="dom1.tag">01 · Halbleiter</span>
+          <h3 data-i18n="dom1.k">Halbleitermodule</h3>
+          <p data-i18n="dom1.body">Kundenspezifische MCU- und Sensor-Baugruppen auf ARM-Cortex-M-Basis, ausgelegt für den Industrie- und Automotive-Temperaturbereich und für Reflow-Serienfertigung.</p>
+          <ul>
+            <li data-i18n="dom1.li1">Cortex-M0+ bis M33, Gehäuse QFN bis BGA</li>
+            <li data-i18n="dom1.li2">−40 … +125 °C, AEC-Q100 Grade 1</li>
+            <li data-i18n="dom1.li3">Firmware, Bootloader &amp; Secure Boot</li>
+            <li data-i18n="dom1.li4">SMD-Bestückung 0201 im Haus</li>
+          </ul>
+        </article>
+        <article class="dom">
+          <span class="tag" data-i18n="dom2.tag">02 · Ortung</span>
+          <h3 data-i18n="dom2.k">GPS-Ortungssysteme</h3>
+          <p data-i18n="dom2.body">Telematik- und Asset-Tracker mit Multiband-GNSS, Mobilfunk-Backhaul und DSGVO-konformer Datenhaltung — vom Steckmodul bis zum fertigen Gerät im Gehäuse.</p>
+          <ul>
+            <li data-i18n="dom2.li1">GPS, GLONASS, Galileo, BeiDou, QZSS</li>
+            <li data-i18n="dom2.li2">L1/L5-Multiband, CEP &lt; 1,5 m</li>
+            <li data-i18n="dom2.li3">LTE-M / NB-IoT, eSIM optional</li>
+            <li data-i18n="dom2.li4">IMU-Koppelnavigation für Tunnel</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="konfigurator">
+    <div class="wrap">
+      <div class="sect-head">
+        <p class="eyebrow" data-i18n="cfg.kicker">Interaktiv</p>
+        <h2 data-i18n="cfg.title">Chip-Konfigurator</h2>
+        <p data-i18n="cfg.sub">Stellen Sie ein Modul zusammen — Bestellnummer, Eckdaten und Richtpreis aktualisieren sich sofort.</p>
+      </div>
+      <div class="cfg-grid">
+        <div class="cfg-controls">
+          <div class="field">
+            <span data-i18n="cfg.core">Rechenkern</span>
+            <div class="seg" data-group="core">
+              <button type="button" data-val="M0" data-pins="0">Cortex-M0+</button>
+              <button type="button" data-val="M4" data-pins="0" aria-pressed="true">Cortex-M4F</button>
+              <button type="button" data-val="M33" data-pins="0">Cortex-M33</button>
+            </div>
+          </div>
+          <div class="field">
+            <span data-i18n="cfg.flash">Flash</span>
+            <div class="seg" data-group="flash">
+              <button type="button" data-val="128">128 KB</button>
+              <button type="button" data-val="256" aria-pressed="true">256 KB</button>
+              <button type="button" data-val="512">512 KB</button>
+              <button type="button" data-val="1024">1 MB</button>
+            </div>
+          </div>
+          <div class="field">
+            <span data-i18n="cfg.pkg">Gehäuse</span>
+            <div class="seg" data-group="pkg">
+              <button type="button" data-val="QFN32" data-pins="32">QFN-32</button>
+              <button type="button" data-val="QFN48" data-pins="48" aria-pressed="true">QFN-48</button>
+              <button type="button" data-val="LGA64" data-pins="64">LGA-64</button>
+              <button type="button" data-val="BGA100" data-pins="100">BGA-100</button>
+            </div>
+          </div>
+          <div class="field">
+            <span data-i18n="cfg.temp">Temperaturbereich</span>
+            <div class="seg" data-group="temp">
+              <button type="button" data-val="IND" aria-pressed="true" data-i18n="cfg.temp.ind">Industrie −40…+85 °C</button>
+              <button type="button" data-val="AUTO" data-i18n="cfg.temp.auto">Automotive −40…+125 °C</button>
+            </div>
+          </div>
+          <div class="field">
+            <span data-i18n="cfg.conn">Konnektivität</span>
+            <div class="seg" data-group="conn">
+              <button type="button" data-val="NONE" aria-pressed="true" data-i18n="cfg.conn.none">ohne</button>
+              <button type="button" data-val="BLE">BLE 5.3</button>
+              <button type="button" data-val="CELL">LTE-M / NB-IoT</button>
+              <button type="button" data-val="GNSS">GNSS L1/L5</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cfg-out">
+          <div class="cfg-out-head"><span class="live-dot"></span><span data-i18n="cfg.datasheet">Datenblatt · Live</span></div>
+          <div class="cfg-chip-vis">
+            <svg id="chipSvg" viewBox="0 0 200 200" role="img" aria-label="Schematische Gehäusedarstellung">
+              <g id="chipPins"></g>
+              <rect class="pkg-body" x="55" y="55" width="90" height="90" rx="6"/>
+              <circle class="pkg-dot" cx="68" cy="68" r="3.5"/>
+              <text class="pkg-label" id="chipLabel" x="100" y="103">ENB-M4</text>
+              <text class="pkg-label" id="chipLabel2" x="100" y="118" style="font-size:8px;fill:#5C6E70">FÜRTH DE</text>
+            </svg>
+          </div>
+          <div class="cfg-specs">
+            <div class="spec wide"><span class="k" data-i18n="cfg.out.part">Bestellnummer</span><span class="v part" id="oPart">ENB-M4-256-QFN48-IND</span></div>
+            <div class="spec"><span class="k" data-i18n="cfg.out.pins">Anschlüsse</span><span class="v" id="oPins">48</span></div>
+            <div class="spec"><span class="k" data-i18n="cfg.out.power">Ruhestrom typ.</span><span class="v" id="oPwr">1,8 µA</span></div>
+            <div class="spec"><span class="k" data-i18n="cfg.out.price">Richtpreis ab 1.000 St.</span><span class="v" id="oPrice">4,20 €</span></div>
+            <div class="spec"><span class="k" data-i18n="cfg.out.lead">Lieferzeit</span><span class="v" id="oLead">8 Wochen</span></div>
+            <div class="spec wide"><span class="k" data-i18n="cfg.out.comp">Konformität</span><span class="badges" id="oBadges"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--surface-2);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sect-head">
+        <p class="eyebrow" data-i18n="pcb.kicker">Baugruppe</p>
+        <h2 data-i18n="pcb.title">Leiterplatte erkunden</h2>
+        <p data-i18n="pcb.sub">Wählen Sie einen Block auf der Platine — die Funktion erscheint rechts.</p>
+      </div>
+      <div class="pcb-grid">
+        <div class="board-wrap">
+          <svg viewBox="0 0 420 260" role="group" aria-label="Interaktive Leiterplatte">
+            <rect class="b-sub" x="6" y="6" width="408" height="248" rx="10"/>
+            <path class="b-trace" d="M70 60 H150 M150 60 V120 M150 120 H210 M300 70 V150 M300 150 H240 M120 200 H260 M340 120 H360 M60 150 H90"/>
+            <circle class="b-trace" cx="20" cy="20" r="6" style="stroke-dasharray:2 3"/>
+            <circle class="b-trace" cx="400" cy="240" r="6" style="stroke-dasharray:2 3"/>
+            <g class="b-block" tabindex="0" role="button" data-key="gnss" aria-label="GNSS-Modul">
+              <rect x="42" y="34" width="88" height="52" rx="4"/><text class="b-block-label" x="86" y="64">GNSS</text>
+            </g>
+            <g class="b-block" tabindex="0" role="button" data-key="mcu" aria-label="Mikrocontroller">
+              <rect x="176" y="90" width="80" height="80" rx="4"/><text class="b-block-label" x="216" y="134">MCU</text>
+            </g>
+            <g class="b-block" tabindex="0" role="button" data-key="power" aria-label="Spannungsversorgung">
+              <rect x="286" y="40" width="72" height="46" rx="4"/><text class="b-block-label" x="322" y="67">POWER</text>
+            </g>
+            <g class="b-block" tabindex="0" role="button" data-key="sim" aria-label="eSIM und Modem">
+              <rect x="300" y="120" width="86" height="52" rx="4"/><text class="b-block-label" x="343" y="150">eSIM / LTE</text>
+            </g>
+            <g class="b-block" tabindex="0" role="button" data-key="imu" aria-label="Inertialsensor">
+              <rect x="90" y="182" width="70" height="46" rx="4"/><text class="b-block-label" x="125" y="209">IMU</text>
+            </g>
+            <g class="b-block" tabindex="0" role="button" data-key="ant" aria-label="Antenne">
+              <rect x="250" y="188" width="96" height="44" rx="4"/><text class="b-block-label" x="298" y="214">ANTENNE</text>
+            </g>
+          </svg>
+        </div>
+        <div class="b-info" id="bInfo" aria-live="polite">
+          <span class="tag" id="biTag">Block</span>
+          <h3 id="biTitle">GNSS-Modul</h3>
+          <p id="biBody">Wählen Sie einen Block auf der Platine.</p>
+          <dl id="biSpecs"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="ablauf">
+    <div class="wrap">
+      <div class="sect-head">
+        <p class="eyebrow" data-i18n="proc.kicker">Ablauf</p>
+        <h2 data-i18n="proc.title">Vom Schaltplan zur qualifizierten Serie</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="no">01</span><h3 data-i18n="proc.s1t">Konzept &amp; Schaltplan</h3><p data-i18n="proc.s1b">Anforderungen, Bauteilauswahl, Schaltplan und Simulation — inklusive Antennen- und HF-Auslegung.</p></div>
+        <div class="step"><span class="no">02</span><h3 data-i18n="proc.s2t">Musterbau</h3><p data-i18n="proc.s2b">Layout, Prototypen ab 5 Stück, bestückt in Fürth, erste Feldtests mit realen GNSS-Bedingungen.</p></div>
+        <div class="step"><span class="no">03</span><h3 data-i18n="proc.s3t">Qualifizierung</h3><p data-i18n="proc.s3b">Temperaturschock, Vibration, EMV nach DIN EN, AEC-Q100 bei Automotive-Projekten.</p></div>
+        <div class="step"><span class="no">04</span><h3 data-i18n="proc.s4t">Serienfertigung</h3><p data-i18n="proc.s4b">SMD/THT-Linie, AOI und Funktionstest, Rückverfolgbarkeit je Seriennummer, IATF 16961.</p></div>
+        <div class="step"><span class="no">05</span><h3 data-i18n="proc.s5t">Support</h3><p data-i18n="proc.s5b">Firmware-OTA, Ersatzteilversorgung 10 Jahre, Obsoleszenz-Management.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="refs">
+    <div class="wrap">
+      <p class="eyebrow" data-i18n="refs.title">Im Einsatz bei</p>
+      <div class="marquee">
+        <div class="marquee-track" id="mtrack"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sect-head">
+        <p class="eyebrow" data-i18n="faq.kicker">Fragen</p>
+        <h2 data-i18n="faq.title">Häufige Fragen</h2>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </section>
+
+  <section class="contact" id="kontakt">
+    <div class="wrap">
+      <div class="sect-head">
+        <p class="eyebrow" data-i18n="contact.kicker">Kontakt</p>
+        <h2 data-i18n="contact.title">Projekt besprechen</h2>
+        <p data-i18n="contact.sub">Schildern Sie kurz Ihre Anwendung. Wir melden uns innerhalb von zwei Werktagen mit einer Einschätzung und einem Musterangebot.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="row"><span data-i18n="contact.addr">Standort</span>Enbaj Elektrotechnik GmbH<br>Waldstraße 42 · 90763 Fürth<br>Deutschland</div>
+          <div class="row"><span data-i18n="contact.phone">Telefon</span>+49 911 99 24 0</div>
+          <div class="row"><span>E-Mail</span>kontakt@enbaj-elektrotechnik.de</div>
+          <div class="row"><span data-i18n="contact.hours">Erreichbar</span>Mo–Fr 08:00–17:00 MEZ</div>
+        </div>
+        <form id="cform" novalidate>
+          <div class="fg"><label for="f-name" data-i18n="form.name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="fg"><label for="f-comp" data-i18n="form.company">Firma</label><input id="f-comp" name="company" type="text" autocomplete="organization"></div>
+          <div class="fg full"><label for="f-mail" data-i18n="form.email">E-Mail</label><input id="f-mail" name="email" type="email" autocomplete="email" required><span class="err" id="e-mail"></span></div>
+          <div class="fg full">
+            <label for="f-app" data-i18n="form.app">Anwendung</label>
+            <select id="f-app" name="application">
+              <option value="fleet" data-i18n="opt.fleet">Flotten-Telematik</option>
+              <option value="asset" data-i18n="opt.asset">Asset-Tracking</option>
+              <option value="ecu" data-i18n="opt.ecu">Automotive-Steuergerät</option>
+              <option value="offhwy" data-i18n="opt.offhwy">Landmaschine / Off-Highway</option>
+              <option value="logistics" data-i18n="opt.logistics">Logistik / Container</option>
+              <option value="medical" data-i18n="opt.medical">Medizingerät</option>
+              <option value="other" data-i18n="opt.other">Andere</option>
+            </select>
+          </div>
+          <div class="fg full"><label for="f-msg" data-i18n="form.msg">Nachricht</label><textarea id="f-msg" name="message" required></textarea></div>
+          <div class="checkrow"><input id="f-sample" name="sample" type="checkbox"><label for="f-sample" style="text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:.9rem;color:var(--muted)" data-i18n="form.sample">Muster für Bemusterung anfordern</label></div>
+          <button class="btn" type="submit" data-i18n="form.submit">Anfrage senden</button>
+          <p class="form-note" id="fnote" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-brand">
+      <a class="brand" href="#top" style="text-decoration:none">
+        <svg width="26" height="26" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+          <path d="M15 2.5 25.8 8.75v12.5L15 27.5 4.2 21.25V8.75L15 2.5Z" stroke="var(--accent)" stroke-width="1.6"/>
+          <circle cx="15" cy="15" r="3.2" fill="var(--accent)"/>
+          <path d="M15 15h7.5" stroke="var(--live)" stroke-width="1.6"/>
+        </svg>
+        <span>Enbaj<small>Elektrotechnik</small></span>
+      </a>
+      <p data-i18n="footer.tagline">Halbleiter und Ortungstechnik. Entwickelt und gefertigt in Deutschland.</p>
+    </div>
+    <div class="f-meta">
+      <div class="std">
+        <span>CE</span><span>RoHS</span><span>REACH</span><span>DIN EN ISO 9001</span><span>IATF 16949</span><span>AEC-Q100</span>
+      </div>
+      <p class="f-legal">
+        <span data-i18n="footer.rights">© 2026 Enbaj Elektrotechnik GmbH</span>
+        <a href="#" data-i18n="footer.imp">Impressum</a>
+        <a href="#" data-i18n="footer.priv">Datenschutz</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var store = {
+    get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},
+    set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  };
+
+  /* ---------------- i18n ---------------- */
+  var I18N = {
+    de:{
+      "status.live":"Systeme betriebsbereit","status.fab":"Fertigung · Fürth",
+      "nav.tech":"Technik","nav.config":"Konfigurator","nav.process":"Ablauf","nav.faq":"FAQ","nav.contact":"Kontakt","nav.samples":"Muster anfordern",
+      "hero.eyebrow":"Enbaj Elektrotechnik · Fürth, Deutschland",
+      "hero.h1":"Chips, die wissen, wo sie sind.",
+      "hero.sub":"Wir entwickeln und fertigen Halbleitermodule und GPS-Ortungssysteme für Industrie, Automotive und Logistik — vom Schaltplan bis zur qualifizierten Serie.",
+      "hero.cta1":"Muster anfordern","hero.cta2":"Technik ansehen",
+      "hero.trust":"Entwicklung + Serienfertigung im Haus · AEC-Q100 · IATF 16949 · DIN EN ISO 9001",
+      "console.title":"Live-Demo · Flotten-Tracking","console.pause":"Pause","console.play":"Weiter","console.reset":"Route neu",
+      "console.lat":"Breite","console.lon":"Länge","console.speed":"Geschw.","console.sats":"Satelliten","console.hdop":"HDOP","console.sig":"Signal",
+      "console.note":"u-blox-kompatibles Multiband-GNSS (L1/L5) · Aided-TTFF < 3 s · NB-IoT-Backhaul",
+      "stats.title":"Kennzahlen",
+      "stat1.label":"Jahre Serienerfahrung","stat2.label":"Module ausgeliefert","stat3.label":"aktive Serienprojekte","stat4.label":"First-Pass-Yield",
+      "dom.kicker":"Was wir bauen","dom.title":"Zwei Disziplinen, eine Leiterplatte",
+      "dom.sub":"Halbleiter-Know-how und Satellitenortung entstehen bei uns am selben Arbeitsplatz — deshalb passt am Ende alles zusammen.",
+      "dom1.tag":"01 · Halbleiter","dom1.k":"Halbleitermodule",
+      "dom1.body":"Kundenspezifische MCU- und Sensor-Baugruppen auf ARM-Cortex-M-Basis, ausgelegt für den Industrie- und Automotive-Temperaturbereich und für Reflow-Serienfertigung.",
+      "dom1.li1":"Cortex-M0+ bis M33, Gehäuse QFN bis BGA","dom1.li2":"−40 … +125 °C, AEC-Q100 Grade 1","dom1.li3":"Firmware, Bootloader & Secure Boot","dom1.li4":"SMD-Bestückung 0201 im Haus",
+      "dom2.tag":"02 · Ortung","dom2.k":"GPS-Ortungssysteme",
+      "dom2.body":"Telematik- und Asset-Tracker mit Multiband-GNSS, Mobilfunk-Backhaul und DSGVO-konformer Datenhaltung — vom Steckmodul bis zum fertigen Gerät im Gehäuse.",
+      "dom2.li1":"GPS, GLONASS, Galileo, BeiDou, QZSS","dom2.li2":"L1/L5-Multiband, CEP < 1,5 m","dom2.li3":"LTE-M / NB-IoT, eSIM optional","dom2.li4":"IMU-Koppelnavigation für Tunnel",
+      "cfg.kicker":"Interaktiv","cfg.title":"Chip-Konfigurator",
+      "cfg.sub":"Stellen Sie ein Modul zusammen — Bestellnummer, Eckdaten und Richtpreis aktualisieren sich sofort.",
+      "cfg.core":"Rechenkern","cfg.flash":"Flash","cfg.pkg":"Gehäuse","cfg.temp":"Temperaturbereich","cfg.conn":"Konnektivität",
+      "cfg.temp.ind":"Industrie −40…+85 °C","cfg.temp.auto":"Automotive −40…+125 °C","cfg.conn.none":"ohne",
+      "cfg.datasheet":"Datenblatt · Live",
+      "cfg.out.part":"Bestellnummer","cfg.out.pins":"Anschlüsse","cfg.out.power":"Ruhestrom typ.","cfg.out.price":"Richtpreis ab 1.000 St.","cfg.out.lead":"Lieferzeit","cfg.out.comp":"Konformität",
+      "pcb.kicker":"Baugruppe","pcb.title":"Leiterplatte erkunden","pcb.sub":"Wählen Sie einen Block auf der Platine — die Funktion erscheint rechts.",
+      "proc.kicker":"Ablauf","proc.title":"Vom Schaltplan zur qualifizierten Serie",
+      "proc.s1t":"Konzept & Schaltplan","proc.s1b":"Anforderungen, Bauteilauswahl, Schaltplan und Simulation — inklusive Antennen- und HF-Auslegung.",
+      "proc.s2t":"Musterbau","proc.s2b":"Layout, Prototypen ab 5 Stück, bestückt in Fürth, erste Feldtests mit realen GNSS-Bedingungen.",
+      "proc.s3t":"Qualifizierung","proc.s3b":"Temperaturschock, Vibration, EMV nach DIN EN, AEC-Q100 bei Automotive-Projekten.",
+      "proc.s4t":"Serienfertigung","proc.s4b":"SMD/THT-Linie, AOI und Funktionstest, Rückverfolgbarkeit je Seriennummer, IATF 16949.",
+      "proc.s5t":"Support","proc.s5b":"Firmware-OTA, Ersatzteilversorgung 10 Jahre, Obsoleszenz-Management.",
+      "refs.title":"Im Einsatz bei",
+      "faq.kicker":"Fragen","faq.title":"Häufige Fragen",
+      "contact.kicker":"Kontakt","contact.title":"Projekt besprechen",
+      "contact.sub":"Schildern Sie kurz Ihre Anwendung. Wir melden uns innerhalb von zwei Werktagen mit einer Einschätzung und einem Musterangebot.",
+      "contact.addr":"Standort","contact.phone":"Telefon","contact.hours":"Erreichbar",
+      "form.name":"Name","form.company":"Firma","form.email":"E-Mail","form.app":"Anwendung","form.msg":"Nachricht","form.sample":"Muster für Bemusterung anfordern","form.submit":"Anfrage senden",
+      "opt.fleet":"Flotten-Telematik","opt.asset":"Asset-Tracking","opt.ecu":"Automotive-Steuergerät","opt.offhwy":"Landmaschine / Off-Highway","opt.logistics":"Logistik / Container","opt.medical":"Medizingerät","opt.other":"Andere",
+      "footer.tagline":"Halbleiter und Ortungstechnik. Entwickelt und gefertigt in Deutschland.",
+      "footer.rights":"© 2026 Enbaj Elektrotechnik GmbH","footer.imp":"Impressum","footer.priv":"Datenschutz",
+      "err.mail":"Bitte eine gültige E-Mail-Adresse angeben.",
+      "toast.sent":"Anfrage übermittelt — wir melden uns innerhalb von zwei Werktagen.",
+      "note.sent":"Gesendet. Referenz ENB-"
+    },
+    en:{
+      "status.live":"Systems operational","status.fab":"Fab · Fürth",
+      "nav.tech":"Technology","nav.config":"Configurator","nav.process":"Process","nav.faq":"FAQ","nav.contact":"Contact","nav.samples":"Request samples",
+      "hero.eyebrow":"Enbaj Elektrotechnik · Fürth, Germany",
+      "hero.h1":"Chips that know where they are.",
+      "hero.sub":"We design and manufacture semiconductor modules and GPS positioning systems for industry, automotive and logistics — from schematic to qualified series production.",
+      "hero.cta1":"Request samples","hero.cta2":"See the tech",
+      "hero.trust":"Design + series production in-house · AEC-Q100 · IATF 16949 · DIN EN ISO 9001",
+      "console.title":"Live demo · Fleet tracking","console.pause":"Pause","console.play":"Resume","console.reset":"New route",
+      "console.lat":"Lat","console.lon":"Lon","console.speed":"Speed","console.sats":"Satellites","console.hdop":"HDOP","console.sig":"Signal",
+      "console.note":"u-blox-compatible multi-band GNSS (L1/L5) · aided TTFF < 3 s · NB-IoT backhaul",
+      "stats.title":"Key figures",
+      "stat1.label":"years in series production","stat2.label":"modules shipped","stat3.label":"active series projects","stat4.label":"first-pass yield",
+      "dom.kicker":"What we build","dom.title":"Two disciplines, one board",
+      "dom.sub":"Semiconductor know-how and satellite positioning happen at the same bench here — which is why it all fits together in the end.",
+      "dom1.tag":"01 · Silicon","dom1.k":"Semiconductor modules",
+      "dom1.body":"Custom MCU and sensor assemblies on ARM Cortex-M, rated for the industrial and automotive temperature range and for reflow series production.",
+      "dom1.li1":"Cortex-M0+ to M33, packages QFN to BGA","dom1.li2":"−40 … +125 °C, AEC-Q100 Grade 1","dom1.li3":"Firmware, bootloader & secure boot","dom1.li4":"0201 SMD assembly in-house",
+      "dom2.tag":"02 · Positioning","dom2.k":"GPS positioning systems",
+      "dom2.body":"Telematics and asset trackers with multi-band GNSS, cellular backhaul and GDPR-compliant data handling — from plug-in module to finished enclosed device.",
+      "dom2.li1":"GPS, GLONASS, Galileo, BeiDou, QZSS","dom2.li2":"L1/L5 multi-band, CEP < 1.5 m","dom2.li3":"LTE-M / NB-IoT, optional eSIM","dom2.li4":"IMU dead reckoning for tunnels",
+      "cfg.kicker":"Interactive","cfg.title":"Chip configurator",
+      "cfg.sub":"Assemble a module — part number, key data and indicative price update instantly.",
+      "cfg.core":"Core","cfg.flash":"Flash","cfg.pkg":"Package","cfg.temp":"Temperature range","cfg.conn":"Connectivity",
+      "cfg.temp.ind":"Industrial −40…+85 °C","cfg.temp.auto":"Automotive −40…+125 °C","cfg.conn.none":"none",
+      "cfg.datasheet":"Datasheet · live",
+      "cfg.out.part":"Part number","cfg.out.pins":"Pins","cfg.out.power":"Quiescent current typ.","cfg.out.price":"Indicative price at 1,000 pcs","cfg.out.lead":"Lead time","cfg.out.comp":"Compliance",
+      "pcb.kicker":"Assembly","pcb.title":"Explore the board","pcb.sub":"Select a block on the board — its function appears on the right.",
+      "proc.kicker":"Process","proc.title":"From schematic to qualified series",
+      "proc.s1t":"Concept & schematic","proc.s1b":"Requirements, part selection, schematic and simulation — including antenna and RF design.",
+      "proc.s2t":"Prototyping","proc.s2b":"Layout, prototypes from 5 pcs, assembled in Fürth, first field tests under real GNSS conditions.",
+      "proc.s3t":"Qualification","proc.s3b":"Thermal shock, vibration, EMC per DIN EN, AEC-Q100 on automotive projects.",
+      "proc.s4t":"Series production","proc.s4b":"SMT/THT line, AOI and functional test, traceability per serial number, IATF 16949.",
+      "proc.s5t":"Support","proc.s5b":"Firmware OTA, 10-year spare-part supply, obsolescence management.",
+      "refs.title":"Deployed across",
+      "faq.kicker":"Questions","faq.title":"Frequently asked",
+      "contact.kicker":"Contact","contact.title":"Discuss a project",
+      "contact.sub":"Outline your application in a few lines. We reply within two working days with an assessment and a sample quote.",
+      "contact.addr":"Location","contact.phone":"Phone","contact.hours":"Available",
+      "form.name":"Name","form.company":"Company","form.email":"Email","form.app":"Application","form.msg":"Message","form.sample":"Request samples for qualification","form.submit":"Send request",
+      "opt.fleet":"Fleet telematics","opt.asset":"Asset tracking","opt.ecu":"Automotive ECU","opt.offhwy":"Agricultural / off-highway","opt.logistics":"Logistics / containers","opt.medical":"Medical device","opt.other":"Other",
+      "footer.tagline":"Semiconductors and positioning technology. Designed and built in Germany.",
+      "footer.rights":"© 2026 Enbaj Elektrotechnik GmbH","footer.imp":"Legal notice","footer.priv":"Privacy",
+      "err.mail":"Please enter a valid email address.",
+      "toast.sent":"Request submitted — we'll be in touch within two working days.",
+      "note.sent":"Sent. Reference ENB-"
+    }
+  };
+
+  var FAQ = {
+    de:[
+      ["Fertigt Enbaj in Deutschland?","Ja. Entwicklung, Layout und Serienfertigung finden am Standort Fürth statt; die SMD- und THT-Bestückung läuft auf unserer eigenen Linie."],
+      ["Unterstützt ihr AEC-Q100 und IATF 16949?","Ja. Automotive-Projekte werden nach AEC-Q100 qualifiziert, unser Fertigungsprozess ist nach IATF 16949 und DIN EN ISO 9001 zertifiziert."],
+      ["Welche GNSS-Konstellationen werden unterstützt?","GPS, GLONASS, Galileo, BeiDou und QZSS, wahlweise als Multiband-Empfänger (L1/L5) für Genauigkeiten unter 1,5 m CEP."],
+      ["Wie hoch ist die Mindestbestellmenge?","Musterbau ab 5 Stück, Serienfertigung ab 500 Stück pro Abruf. Rahmenverträge mit Lagerabruf sind möglich."],
+      ["Wie lang ist die Time-to-First-Fix?","Kaltstart unter 26 s, Warmstart unter 5 s, Heißstart unter 1 s. Mit Assistenzdaten (A-GNSS) unter 3 s."],
+      ["Wie werden Ortungsdaten datenschutzrechtlich behandelt?","Die Systeme sind DSGVO-konform ausgelegt. Rohdaten bleiben beim Kunden oder werden ausschließlich in EU-Rechenzentren verarbeitet."]
+    ],
+    en:[
+      ["Does Enbaj manufacture in Germany?","Yes. Design, layout and series production take place at the Fürth site; SMD and THT assembly run on our own line."],
+      ["Do you support AEC-Q100 and IATF 16949?","Yes. Automotive projects are qualified to AEC-Q100, and our production process is certified to IATF 16949 and DIN EN ISO 9001."],
+      ["Which GNSS constellations are supported?","GPS, GLONASS, Galileo, BeiDou and QZSS, optionally as a multi-band receiver (L1/L5) for accuracy below 1.5 m CEP."],
+      ["What is the minimum order quantity?","Prototypes from 5 pcs, series production from 500 pcs per call-off. Framework agreements with buffer stock are available."],
+      ["What is the time-to-first-fix?","Cold start under 26 s, warm start under 5 s, hot start under 1 s. With assistance data (A-GNSS) under 3 s."],
+      ["How are positioning data handled for privacy?","The systems are designed to be GDPR-compliant. Raw data stays with the customer or is processed exclusively in EU data centres."]
+    ]
+  };
+
+  var PCB = {
+    de:{
+      gnss:["Empfänger","GNSS-Modul","Multiband-GNSS-Empfänger mit integriertem SAW-Filter und LNA. Liefert Position, Geschwindigkeit und Zeit über UART und I²C.",[["Bänder","L1 + L5"],["Kanäle","72"],["TTFF (aided)","< 3 s"],["Genauigkeit","1,2 m CEP"]]],
+      mcu:["Rechenkern","Mikrocontroller","ARM Cortex-M33 mit TrustZone. Verarbeitet Sensorfusion, Geofencing und die Kommunikations-Stacks; Secure Boot ab Werk.",[["Takt","120 MHz"],["Flash","512 KB"],["RAM","256 KB"],["Krypto","AES-256, ECC"]]],
+      power:["Versorgung","Spannungsregler","Synchroner Abwärtswandler mit Ultra-Low-IQ-LDO-Pfad für den Ruhezustand. Eingang 5–36 V, geeignet für Bordnetz.",[["Eingang","5–36 V"],["Wirkungsgrad","94 %"],["Ruhestrom","1,8 µA"],["Schutz","Verpolung, ISO 7637"]]],
+      sim:["Mobilfunk","eSIM / LTE-Modem","LTE-M- und NB-IoT-Modem mit fest verlöteter eSIM (MFF2). Fallback auf 2G, Roaming-Profile über den Netzbetreiber verwaltbar.",[["Netz","LTE-M / NB-IoT"],["SIM","eSIM MFF2"],["Sendeleistung","23 dBm"],["Backup","2G"]]],
+      imu:["Sensorik","Inertialsensor","6-Achsen-IMU für Koppelnavigation, wenn kein Satellitenempfang möglich ist — etwa in Tunneln oder Tiefgaragen. Erkennt zudem Aufprall und Diebstahl.",[["Achsen","3× Gyro, 3× Accel"],["Bereich","±16 g"],["Rauschen","90 µg/√Hz"],["Rate","bis 1 kHz"]]],
+      ant:["HF","Antenne","Keramik-Patch-Antenne für L1/L5, abgestimmt auf die Massefläche der Baugruppe. Optional aktive Antenne über den HF-Anschluss.",[["Typ","Keramik-Patch"],["Bänder","1176 / 1575 MHz"],["Gewinn","4,5 dBi"],["Anschluss","U.FL / SMA"]]]
+    },
+    en:{
+      gnss:["Receiver","GNSS module","Multi-band GNSS receiver with integrated SAW filter and LNA. Provides position, velocity and time over UART and I²C.",[["Bands","L1 + L5"],["Channels","72"],["TTFF (aided)","< 3 s"],["Accuracy","1.2 m CEP"]]],
+      mcu:["Core","Microcontroller","ARM Cortex-M33 with TrustZone. Runs sensor fusion, geofencing and the communication stacks; secure boot from the factory.",[["Clock","120 MHz"],["Flash","512 KB"],["RAM","256 KB"],["Crypto","AES-256, ECC"]]],
+      power:["Supply","Voltage regulator","Synchronous buck converter with an ultra-low-IQ LDO path for standby. Input 5–36 V, suitable for vehicle electrical systems.",[["Input","5–36 V"],["Efficiency","94 %"],["Quiescent","1.8 µA"],["Protection","Reverse, ISO 7637"]]],
+      sim:["Cellular","eSIM / LTE modem","LTE-M and NB-IoT modem with soldered eSIM (MFF2). Fallback to 2G, roaming profiles managed via the carrier.",[["Network","LTE-M / NB-IoT"],["SIM","eSIM MFF2"],["TX power","23 dBm"],["Backup","2G"]]],
+      imu:["Sensing","Inertial sensor","6-axis IMU for dead reckoning when there is no satellite reception — in tunnels or underground car parks. Also detects impact and theft.",[["Axes","3× gyro, 3× accel"],["Range","±16 g"],["Noise","90 µg/√Hz"],["Rate","up to 1 kHz"]]],
+      ant:["RF","Antenna","Ceramic patch antenna for L1/L5, tuned to the assembly's ground plane. Optional active antenna via the RF connector.",[["Type","Ceramic patch"],["Bands","1176 / 1575 MHz"],["Gain","4.5 dBi"],["Connector","U.FL / SMA"]]]
+    }
+  };
+
+  var REFS = {
+    de:["Automotive Tier-1","Landmaschinen-OEM","Logistik-Flottenbetreiber","Stadtwerke","Baumaschinen-Vermietung","Medizintechnik","Bahntechnik","Container-Reederei","Kommunale Fuhrparks","Werkzeugbau"],
+    en:["Automotive Tier-1","Agri-machinery OEM","Logistics fleet operator","Municipal utilities","Construction rental","Medical technology","Rail systems","Container shipping","Municipal fleets","Tool & die"]
+  };
+
+  var lang = store.get("enbaj-lang") || "de";
+
+  function applyLang(l){
+    lang = l;
+    var dict = I18N[l];
+    document.documentElement.lang = l;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var k = el.getAttribute("data-i18n");
+      if(dict[k] != null) el.textContent = dict[k];
+    });
+    document.getElementById("langBtn").textContent = (l === "de") ? "EN" : "DE";
+    buildFaq(); buildRefs();
+    if(pcbActiveKey) showPcb(pcbActiveKey); else showPcbPlaceholder();
+    render(); /* configurator strings */
+    ppBtn.textContent = playing ? dict["console.pause"] : dict["console.play"];
+    store.set("enbaj-lang", l);
+  }
+
+  document.getElementById("langBtn").addEventListener("click", function(){
+    applyLang(lang === "de" ? "en" : "de");
+  });
+
+  /* ---------------- theme ---------------- */
+  var themeBtn = document.getElementById("themeBtn");
+  var themeLbl = document.getElementById("themeLbl");
+  function currentTheme(){
+    var explicit = document.documentElement.getAttribute("data-theme");
+    if(explicit) return explicit;
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches) ? "dark" : "light";
+  }
+  function setTheme(t){
+    document.documentElement.setAttribute("data-theme", t);
+    themeLbl.textContent = (t === "dark")
+      ? (lang === "de" ? "Hell" : "Light")
+      : (lang === "de" ? "Dunkel" : "Dark");
+    store.set("enbaj-theme", t);
+  }
+  var savedTheme = store.get("enbaj-theme");
+  if(savedTheme) setTheme(savedTheme); else themeLbl.textContent = (lang==="de"?"Dunkel":"Dark");
+  themeBtn.addEventListener("click", function(){
+    setTheme(currentTheme() === "dark" ? "light" : "dark");
+  });
+
+  /* ---------------- clock ---------------- */
+  var clockEl = document.getElementById("clock");
+  function tickClock(){
+    var d = new Date();
+    var s = d.toLocaleTimeString("de-DE",{hour12:false,timeZone:"Europe/Berlin"});
+    clockEl.textContent = s + " MEZ";
+  }
+  tickClock(); setInterval(tickClock, 1000);
+
+  /* ---------------- hero canvas: PCB routing ---------------- */
+  (function pcbCanvas(){
+    var cv = document.getElementById("pcb");
+    var ctx = cv.getContext("2d");
+    var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var nodes = [], packets = [];
+    function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+    function resize(){
+      var r = cv.getBoundingClientRect();
+      W = r.width; H = r.height;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      build();
+    }
+    function build(){
+      nodes = [];
+      var gap = 62, cols = Math.ceil(W/gap)+2, rows = Math.ceil(H/gap)+2;
+      for(var y=0;y<rows;y++) for(var x=0;x<cols;x++){
+        nodes.push({x:x*gap - gap*0.5, y:y*gap - gap*0.5});
+      }
+      packets = [];
+      var n = reduced ? 0 : Math.min(26, Math.round(W*H/26000));
+      for(var i=0;i<n;i++) packets.push(spawn());
+    }
+    function spawn(){
+      var a = nodes[(Math.random()*nodes.length)|0];
+      return { x:a.x, y:a.y, dir:(Math.random()*4)|0, life:0, max:120+Math.random()*220, seg:0, segLen:1+((Math.random()*3)|0) };
+    }
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      var line = css("--line-strong") || "#aaa";
+      var acc = css("--accent") || "#0E8C82";
+      var live = css("--live") || "#B9790A";
+      /* static faint trace grid */
+      ctx.strokeStyle = line; ctx.globalAlpha = 0.16; ctx.lineWidth = 1;
+      ctx.beginPath();
+      for(var gy=30; gy<H; gy+=62){ ctx.moveTo(0,gy); ctx.lineTo(W,gy); }
+      for(var gx=30; gx<W; gx+=62){ ctx.moveTo(gx,0); ctx.lineTo(gx,H); }
+      ctx.stroke();
+      ctx.globalAlpha = 0.5;
+      for(var i=0;i<nodes.length;i+=1){
+        if((i%7)===0){ ctx.fillStyle = line; ctx.fillRect(nodes[i].x-1.4, nodes[i].y-1.4, 2.8, 2.8); }
+      }
+      /* moving packets route orthogonally */
+      ctx.globalAlpha = 1;
+      for(var p=0;p<packets.length;p++){
+        var k = packets[p];
+        var spd = 0.9;
+        if(k.dir===0) k.x += spd; else if(k.dir===1) k.x -= spd; else if(k.dir===2) k.y += spd; else k.y -= spd;
+        k.life += spd;
+        if(k.life > k.seg*62*k.segLen + 62){
+          k.seg++;
+          var turn = Math.random() < 0.5 ? 1 : 3;
+          k.dir = (k.dir + turn) % 4;
+          k.segLen = 1 + ((Math.random()*3)|0);
+        }
+        if(k.life > k.max || k.x<-20 || k.x>W+20 || k.y<-20 || k.y>H+20){ packets[p] = spawn(); continue; }
+        var fade = Math.min(1, (k.max - k.life)/60);
+        ctx.strokeStyle = acc; ctx.globalAlpha = 0.28*fade; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(k.x, k.y);
+        ctx.lineTo(k.x - (k.dir===0?10:k.dir===1?-10:0), k.y - (k.dir===2?10:k.dir===3?-10:0));
+        ctx.stroke();
+        ctx.fillStyle = live; ctx.globalAlpha = 0.9*fade;
+        ctx.beginPath(); ctx.arc(k.x, k.y, 1.7, 0, 6.283); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    var raf;
+    function loop(){ draw(); raf = requestAnimationFrame(loop); }
+    window.addEventListener("resize", resize, {passive:true});
+    resize();
+    if(reduced){ draw(); } else { loop(); }
+  })();
+
+  /* ---------------- live GPS tracker ---------------- */
+  var routeSets = [
+    [[24,168],[70,168],[70,120],[130,120],[130,64],[196,64],[196,110],[256,110],[256,150],[300,150]],
+    [[16,40],[16,110],[86,110],[86,168],[170,168],[170,96],[250,96],[250,40],[304,40]],
+    [[300,24],[300,84],[214,84],[214,150],[130,150],[130,96],[54,96],[54,176],[20,176]]
+  ];
+  var rIdx = 0, t = reduced ? 0.42 : 0, playing = !reduced, lastTs = null, speedMul = 1;
+  var routeLine = document.getElementById("routeLine");
+  var trailLine = document.getElementById("trailLine");
+  var veh = document.getElementById("veh"), vehHalo = document.getElementById("vehHalo");
+  var roLat = document.getElementById("roLat"), roLon = document.getElementById("roLon"),
+      roSpd = document.getElementById("roSpd"), roSat = document.getElementById("roSat"),
+      roHdop = document.getElementById("roHdop"), sig = document.getElementById("sig");
+  var ppBtn = document.getElementById("ppBtn"), rsBtn = document.getElementById("rsBtn");
+  var liveDot = document.getElementById("liveDot");
+  var segs = [], total = 0;
+
+  function loadRoute(){
+    var pts = routeSets[rIdx];
+    routeLine.setAttribute("points", pts.map(function(p){return p.join(",")}).join(" "));
+    segs = []; total = 0;
+    for(var i=1;i<pts.length;i++){
+      var dx = pts[i][0]-pts[i-1][0], dy = pts[i][1]-pts[i-1][1];
+      var len = Math.hypot(dx,dy);
+      segs.push({a:pts[i-1], b:pts[i], len:len, acc:total});
+      total += len;
+    }
+  }
+  function posAt(tt){
+    var d = tt * total, i = 0;
+    while(i < segs.length-1 && d > segs[i].acc + segs[i].len) i++;
+    var s = segs[i], local = Math.max(0, Math.min(1, (d - s.acc)/s.len));
+    return [ s.a[0] + (s.b[0]-s.a[0])*local, s.a[1] + (s.b[1]-s.a[1])*local, i ];
+  }
+  var fmt = function(n,dec){ return n.toFixed(dec).replace(".", ","); };
+
+  function renderTracker(){
+    var pr = posAt(t), x = pr[0], y = pr[1];
+    veh.setAttribute("cx", x); veh.setAttribute("cy", y);
+    vehHalo.setAttribute("cx", x); vehHalo.setAttribute("cy", y);
+    /* trail */
+    var steps = 26, pts = [];
+    for(var i=0;i<=steps;i++){
+      var tt = t * i/steps;
+      var q = posAt(tt); pts.push(q[0].toFixed(1)+","+q[1].toFixed(1));
+    }
+    trailLine.setAttribute("points", pts.join(" "));
+    /* fake geo derived from position */
+    var lat = 49.4783 + (200 - y)/200 * 0.052;
+    var lon = 11.0119 + x/320 * 0.084;
+    roLat.textContent = fmt(lat,4) + "° N";
+    roLon.textContent = fmt(lon,4) + "° E";
+    var kmh = playing ? (34 + 16*Math.sin(t*22) + (pr[2]%2?6:0)) : 0;
+    if(kmh < 0) kmh = 4;
+    roSpd.innerHTML = Math.round(kmh) + ' <small>km/h</small>';
+    var sats = 9 + (Math.round(2 + 1.6*Math.sin(t*40)));
+    roSat.textContent = sats + " / GPS+GAL";
+    roHdop.textContent = fmt(0.7 + 0.5*Math.abs(Math.sin(t*30)), 1);
+    var on = playing ? (4 + (Math.sin(t*50) > 0.2 ? 1 : 0)) : 3;
+    Array.prototype.forEach.call(sig.children, function(b, i){ b.classList.toggle("on", i < on); });
+  }
+  function frame(ts){
+    if(lastTs == null) lastTs = ts;
+    var dt = (ts - lastTs)/1000; lastTs = ts;
+    if(playing){
+      t += dt * 0.05 * speedMul;
+      if(t >= 1){ t = 0; }
+      renderTracker();
+    }
+    requestAnimationFrame(frame);
+  }
+  loadRoute(); renderTracker();
+  if(!reduced) requestAnimationFrame(frame);
+
+  ppBtn.addEventListener("click", function(){
+    playing = !playing;
+    ppBtn.textContent = I18N[lang][playing ? "console.pause" : "console.play"];
+    liveDot.classList.toggle("pulse", playing);
+    lastTs = null;
+    if(!playing) renderTracker();
+  });
+  rsBtn.addEventListener("click", function(){
+    rIdx = (rIdx + 1) % routeSets.length;
+    t = 0; loadRoute(); renderTracker();
+    if(!playing){ playing = true; ppBtn.textContent = I18N[lang]["console.pause"]; liveDot.classList.add("pulse"); lastTs = null; }
+  });
+
+  /* ---------------- stat counters ---------------- */
+  (function counters(){
+    var els = document.querySelectorAll(".stat .num");
+    if(reduced || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        io.unobserve(e.target);
+        var el = e.target;
+        var target = parseFloat(el.getAttribute("data-count"));
+        var dec = parseInt(el.getAttribute("data-decimals") || "0", 10);
+        var suf = el.getAttribute("data-suffix") || "";
+        var start = performance.now(), dur = 1100;
+        function step(now){
+          var p = Math.min(1, (now - start)/dur);
+          var v = target * (1 - Math.pow(1-p, 3));
+          el.textContent = v.toFixed(dec).replace(".", ",") + suf;
+          if(p < 1) requestAnimationFrame(step);
+          else el.textContent = target.toFixed(dec).replace(".", ",") + suf;
+        }
+        requestAnimationFrame(step);
+      });
+    }, {threshold:0.5});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ---------------- configurator ---------------- */
+  var cfg = { core:"M4", flash:"256", pkg:"QFN48", temp:"IND", conn:"NONE" };
+  var pinsByPkg = { QFN32:32, QFN48:48, LGA64:64, BGA100:100 };
+  var coreName = { M0:"M0", M4:"M4", M33:"M33" };
+  var powerByCore = { M0:0.9, M4:1.8, M33:2.4 };
+  var connLabel = { NONE:{de:"—",en:"—"}, BLE:{de:"BLE",en:"BLE"}, CELL:{de:"CELL",en:"CELL"}, GNSS:{de:"GNSS",en:"GNSS"} };
+
+  document.querySelectorAll(".seg").forEach(function(seg){
+    seg.addEventListener("click", function(e){
+      var btn = e.target.closest("button"); if(!btn) return;
+      var group = seg.getAttribute("data-group");
+      seg.querySelectorAll("button").forEach(function(b){ b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
+      cfg[group] = btn.getAttribute("data-val");
+      render();
+    });
+  });
+
+  function drawChip(pins){
+    var g = document.getElementById("chipPins");
+    g.innerHTML = "";
+    var perSide = Math.max(2, Math.round(pins/4));
+    var span = 78, start = 61, x0 = 55, y0 = 55, w = 90;
+    var mk = function(x1,y1,x2,y2){
+      var l = document.createElementNS("http://www.w3.org/2000/svg","line");
+      l.setAttribute("x1",x1); l.setAttribute("y1",y1); l.setAttribute("x2",x2); l.setAttribute("y2",y2);
+      l.setAttribute("class","pkg-pin"); g.appendChild(l);
+    };
+    for(var i=0;i<perSide;i++){
+      var f = perSide===1?0.5:i/(perSide-1);
+      var p = start + f*span;
+      mk(x0-12, p, x0, p);          /* left  */
+      mk(x0+w, p, x0+w+12, p);      /* right */
+      mk(p, y0-12, p, y0);          /* top   */
+      mk(p, y0+w, p, y0+w+12);      /* bottom*/
+    }
+  }
+
+  function render(){
+    var L = lang;
+    var pins = pinsByPkg[cfg.pkg];
+    var connPart = cfg.conn === "NONE" ? "" : "-" + connLabel[cfg.conn][L];
+    var tempPart = cfg.temp === "AUTO" ? "-AQ" : "-IND";
+    var part = "ENB-" + coreName[cfg.core] + "-" + cfg.flash + "-" + cfg.pkg + tempPart + connPart;
+    document.getElementById("oPart").textContent = part;
+    document.getElementById("oPins").textContent = String(pins);
+
+    var pwr = powerByCore[cfg.core] + (cfg.temp === "AUTO" ? 0.6 : 0) + (cfg.conn === "CELL" ? 1.4 : cfg.conn === "GNSS" ? 0.8 : cfg.conn === "BLE" ? 0.3 : 0);
+    document.getElementById("oPwr").textContent = pwr.toFixed(1).replace(".", ",") + " µA";
+
+    var price = 2.1
+      + ({M0:0.0,M4:0.9,M33:1.8})[cfg.core]
+      + ({ "128":0.0,"256":0.4,"512":1.0,"1024":2.1 })[cfg.flash]
+      + ({QFN32:0.0,QFN48:0.3,LGA64:0.9,BGA100:1.8})[cfg.pkg]
+      + (cfg.temp === "AUTO" ? 1.1 : 0)
+      + ({NONE:0,BLE:0.8,CELL:3.4,GNSS:2.6})[cfg.conn];
+    document.getElementById("oPrice").textContent = price.toFixed(2).replace(".", ",") + " €";
+
+    var lead = 6 + (cfg.pkg === "BGA100" ? 3 : cfg.pkg === "LGA64" ? 2 : 0) + (cfg.temp === "AUTO" ? 3 : 0) + (cfg.conn === "CELL" ? 2 : 0);
+    document.getElementById("oLead").textContent = lead + " " + (L === "de" ? "Wochen" : "weeks");
+
+    var badges = ["RoHS", "REACH", "CE"];
+    if(cfg.temp === "AUTO") badges.push("AEC-Q100", "IATF 16949");
+    if(cfg.conn === "CELL") badges.push("RED", "GCF");
+    if(cfg.conn === "GNSS") badges.push("L1/L5");
+    var bl = document.getElementById("oBadges");
+    bl.innerHTML = "";
+    badges.forEach(function(b){ var s = document.createElement("span"); s.textContent = b; bl.appendChild(s); });
+
+    document.getElementById("chipLabel").textContent = "ENB-" + coreName[cfg.core];
+    drawChip(pins);
+  }
+  render();
+
+  /* ---------------- pcb explorer ---------------- */
+  var pcbActiveKey = null;
+  var blocks = document.querySelectorAll(".b-block");
+  function showPcb(key){
+    pcbActiveKey = key;
+    var d = PCB[lang][key];
+    document.getElementById("biTag").textContent = d[0];
+    document.getElementById("biTitle").textContent = d[1];
+    document.getElementById("biBody").textContent = d[2];
+    var dl = document.getElementById("biSpecs"); dl.innerHTML = "";
+    d[3].forEach(function(row){
+      var dt = document.createElement("dt"); dt.textContent = row[0];
+      var dd = document.createElement("dd"); dd.textContent = row[1];
+      dl.appendChild(dt); dl.appendChild(dd);
+    });
+    blocks.forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-key") === key); });
+  }
+  function showPcbPlaceholder(){
+    document.getElementById("biTag").textContent = lang === "de" ? "Block" : "Block";
+    document.getElementById("biTitle").textContent = lang === "de" ? "GNSS-Modul" : "GNSS module";
+    document.getElementById("biBody").textContent = I18N[lang]["pcb.sub"];
+    document.getElementById("biSpecs").innerHTML = "";
+  }
+  blocks.forEach(function(b){
+    b.addEventListener("click", function(){ showPcb(b.getAttribute("data-key")); });
+    b.addEventListener("mouseenter", function(){ showPcb(b.getAttribute("data-key")); });
+    b.addEventListener("focus", function(){ showPcb(b.getAttribute("data-key")); });
+    b.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); showPcb(b.getAttribute("data-key")); } });
+  });
+  showPcb("gnss");
+
+  /* ---------------- faq ---------------- */
+  function buildFaq(){
+    var list = document.getElementById("faqList");
+    var open = -1;
+    Array.prototype.forEach.call(list.querySelectorAll("button"), function(b,i){ if(b.getAttribute("aria-expanded")==="true") open = i; });
+    list.innerHTML = "";
+    FAQ[lang].forEach(function(qa, i){
+      var wrap = document.createElement("div"); wrap.className = "qa";
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.setAttribute("aria-expanded", i === open ? "true" : "false");
+      btn.id = "faq-btn-" + i; btn.setAttribute("aria-controls", "faq-ans-" + i);
+      btn.textContent = qa[0];
+      var ans = document.createElement("div"); ans.className = "ans"; ans.id = "faq-ans-" + i;
+      ans.setAttribute("role","region"); ans.setAttribute("aria-labelledby","faq-btn-"+i);
+      var p = document.createElement("p"); p.textContent = qa[1]; ans.appendChild(p);
+      btn.addEventListener("click", function(){
+        var isOpen = btn.getAttribute("aria-expanded") === "true";
+        list.querySelectorAll("button").forEach(function(x){ x.setAttribute("aria-expanded","false"); });
+        list.querySelectorAll(".ans").forEach(function(x){ x.style.maxHeight = "0px"; });
+        if(!isOpen){ btn.setAttribute("aria-expanded","true"); ans.style.maxHeight = ans.scrollHeight + "px"; }
+      });
+      wrap.appendChild(btn); wrap.appendChild(ans); list.appendChild(wrap);
+      if(i === open) ans.style.maxHeight = ans.scrollHeight + "px";
+    });
+  }
+
+  /* ---------------- refs marquee ---------------- */
+  function buildRefs(){
+    var track = document.getElementById("mtrack");
+    track.innerHTML = "";
+    var items = REFS[lang].concat(REFS[lang]); /* duplicate for seamless loop */
+    items.forEach(function(name){
+      var d = document.createElement("div"); d.className = "chiptag"; d.textContent = name;
+      track.appendChild(d);
+    });
+  }
+
+  /* ---------------- contact form ---------------- */
+  var form = document.getElementById("cform");
+  var toast = document.getElementById("toast");
+  var toastTimer;
+  function showToast(msg){
+    toast.textContent = msg; toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 4200);
+  }
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var mail = document.getElementById("f-mail");
+    var errMail = document.getElementById("e-mail");
+    var ok = form.checkValidity() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.value);
+    errMail.textContent = "";
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.value)){
+      errMail.textContent = I18N[lang]["err.mail"];
+    }
+    if(!ok){
+      var firstInvalid = form.querySelector(":invalid");
+      if(firstInvalid) firstInvalid.focus();
+      return;
+    }
+    var ref = Math.floor(100000 + Math.random()*899999);
+    document.getElementById("fnote").textContent = I18N[lang]["note.sent"] + ref;
+    showToast(I18N[lang]["toast.sent"]);
+    form.reset();
+  });
+
+  /* ---------------- init ---------------- */
+  applyLang(lang);
+})();
+</script>
