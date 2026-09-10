@@ -173,9 +173,9 @@
   }
 
   /* ---- hero ---- */
-  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);padding-block:0}
   #pcb{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:.5;pointer-events:none}
-  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;padding-block:clamp(48px,6vw,88px)}
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;padding-block:clamp(44px,7vw,92px)}
   .hero-copy{display:flex;flex-direction:column;gap:22px}
   .hero h1{font-size:clamp(2.05rem,1.2rem+3.7vw,3.9rem);font-weight:600;letter-spacing:-.02em}
   .hero-sub{font-size:1.12rem;color:var(--muted);max-width:44ch}
@@ -185,8 +185,8 @@
     font-size:.92rem;font-weight:600;padding:12px 20px;border-radius:4px;
     border:1px solid var(--accent);background:var(--accent);color:#fff;transition:filter .15s, transform .1s;
   }
-  :root[data-theme="dark"] .btn,
-  :root:not([data-theme="light"]) .btn{color:#06110F}
+  :root[data-theme="dark"] .btn:not(.ghost),
+  :root:not([data-theme="light"]) .btn:not(.ghost){color:#06110F}
   .btn:hover{filter:brightness(1.06)}
   .btn:active{transform:translateY(1px)}
   .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
@@ -331,7 +331,7 @@
   @media (max-width:460px){.steps{grid-template-columns:1fr}.step,.step:nth-child(odd){border-left:0;padding-left:0}}
 
   /* ---- refs marquee ---- */
-  .refs{border-bottom:1px solid var(--line);overflow:hidden}
+  .refs{border-bottom:1px solid var(--line);overflow:hidden;padding-block:0}
   .refs .wrap{padding-block:clamp(40px,5vw,64px)}
   .marquee{overflow:hidden;margin-top:24px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
   .marquee-track{display:flex;gap:14px;width:max-content;animation:scroll 34s linear infinite}
@@ -405,10 +405,11 @@
     section{padding-block:clamp(44px,10vw,72px)}
     .sect-head{margin-bottom:26px}
     .sect-head p{font-size:1rem}
-    .hero .wrap{gap:30px;padding-block:36px}
+    .hero .wrap{gap:26px;padding-block:26px 40px;align-items:start}
     .hero-sub{font-size:1.04rem}
     .hero-actions{gap:10px}
     .hero-actions .btn{flex:1 1 100%;justify-content:center}
+    .refs .wrap{padding-block:40px}
     .dom{padding:22px}
     .board-wrap{padding:12px}
     .b-info{padding:18px}
@@ -420,7 +421,11 @@
     .f-legal a{margin-left:0}
   }
   @media (max-width:560px){
+    /* keep the status bar to a single compact line */
+    .statusbar .wrap{gap:10px;min-height:34px}
+    .statusbar .sb-item [data-i18n="status.live"]{display:none}
     .sb-hide-sm{display:none}
+    .sb-btn{padding:5px 8px;letter-spacing:.05em}
     .readout{grid-template-columns:1fr 1fr}
     .ro .v{font-size:.94rem}
     .cfg-specs{grid-template-columns:1fr}
